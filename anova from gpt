@@ -1,0 +1,21 @@
+import pandas as pd
+import statsmodels.api as sm
+from statsmodels.formula.api import ols
+
+# Create a DataFrame for your data
+data = {
+    'Journal': ['Journal 1', 'Journal 1', 'Journal 1', 'Journal 1', 'Journal 1', 'Journal 1', 
+                'Journal 2', 'Journal 2', 'Journal 2', 'Journal 2', 'Journal 2', 'Journal 2'],
+    'Year': [2017, 2018, 2019, 2020, 2021, 2022, 
+             2017, 2018, 2019, 2020, 2021, 2022],
+    'Number_of_Articles': [82, 68, 70, 78, 81, 65, 
+                           60, 56, 52, 55, 45, 40]
+}
+
+df = pd.DataFrame(data)
+
+# Run a one-way ANOVA
+model = ols('Number_of_Articles ~ C(Journal)', data=df).fit()
+anova_table = sm.stats.anova_lm(model, typ=2)
+
+print(anova_table)
